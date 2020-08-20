@@ -11,11 +11,12 @@ uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
 
 if uploaded_file is not None:
-  df = pd.read_csv('newt.csv')
+  df = pd.read_csv(uploaded_file)
   for col in df.columns:
     new_list.append(col)
   options = st.multiselect('Select the multiple columns which u need to check duplicates',new_list )
   if st.button('Deduplicate'):
     df_final = pandas_dedupe.dedupe_dataframe(df,options)
-    st.dataframe(df_final)
+    df_sort = df_final.sort_values('cluster id')
+    st.dataframe(df_sort)
   
